@@ -1,26 +1,34 @@
 const express = require('express');
 const router  = express.Router();
 
-const createMiddleware = require('../http/middlewares/create.middleware');
-const crudController   = require('../http/controllers/crud.controller');
+const validate          = require('../http/middlewares/validate.middleware');
+const studentController = require('../http/controllers/student.controller');
 
 // Create
-// data => middleware => controller => service
 router.post('/create',
-    createMiddleware,
-    crudController.create
+    validate,
+    studentController.create
 );
 
 // Find All
-router.get('/all', crudController.findAll);
+router.get('/all',
+    studentController.findAll
+);
 
 // Find One
-router.get('/detail/:id');
+router.get('/detail/:id',
+    studentController.findOne
+);
 
 // Update
-router.put('/');
+router.put('/edit/:id',
+    validate,
+    studentController.edit
+);
 
 // Delete
-router.delete('/');
+router.delete('/delete/:id',
+    studentController.delete
+);
 
 module.exports = router;
